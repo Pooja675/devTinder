@@ -1,29 +1,29 @@
-const express = require("express");
+const express = require("express")
+const app = express()
+const {adminAuth,userAuth} = require("./middlewares/auth")
 
-const app = express(); //Instance of express
+app.use("/admin", adminAuth)
 
-app.use("/user", (req,res) => {
-    res.send("HAHAHAHAHAHA")
+app.get("/user/login", (req,res) => {
+    res.send("User logged in successfully.")
 })
 
-//This will only handle GET to/test
-app.get("/user", (req, res) => {
-  res.send({ firstName: "Pooja", lastName: "Kumari" });
-});
 
-app.post("/user", (req, res) => {
-  res.send("Data successfully saved in the database.");
-});
+app.get("/user", userAuth, (req,res) => {
+    res.send("User data sent.")
+})
 
-app.delete("/user", (req, res) => {
-  res.send("Data deleted successfully.");
-});
+app.get("/admin/getAllData", (req,res) => {
 
-//This will match all the HTTP method API calls to / test
-app.use("/test", (req, res) => {
-  res.send("Namaste node.js season-2 !!");
-});
+    res.send("All data sent.")
+})
+
+app.get("/admin/DeleteAllData", (req,res) => {
+
+    res.send("Deleted all data.")
+})
 
 app.listen("5555", () => {
-  console.log("Server has started successfully....");
-});
+
+    console.log("Server started successfully.")
+})
